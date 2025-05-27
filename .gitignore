@@ -219,3 +219,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 module-6/deployment/docker-compose.yml
+/module-1/studio/.langgraph_api
+*.pckl
+module-2/state_db/example.db-shm
+module-2/state_db/example.db-wal
