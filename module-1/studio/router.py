@@ -1,7 +1,9 @@
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import MessagesState
 from langgraph.graph import StateGraph, START, END
 from langgraph.prebuilt import ToolNode, tools_condition
+import os
 
 # Tool
 def multiply(a: int, b: int) -> int:
@@ -14,7 +16,10 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 # LLM with bound tool
-llm = ChatOpenAI(model="gpt-4o")
+# llm = ChatOpenAI(model="gpt-4o")
+if "GOOGLE_API_KEY" not in os.environ:
+        os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
 llm_with_tools = llm.bind_tools([multiply])
 
 # Node
