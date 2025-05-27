@@ -2,10 +2,15 @@ from typing import Literal
 from langchain_core.messages import HumanMessage, SystemMessage, RemoveMessage
 from langgraph.graph import MessagesState
 from langgraph.graph import StateGraph, START, END
+import os
 
 # We will use this model for both the conversation and the summarization
-from langchain_openai import ChatOpenAI
-model = ChatOpenAI(model="gpt-4o", temperature=0) 
+# from langchain_openai import ChatOpenAI
+# model = ChatOpenAI(model="gpt-4o", temperature=0) 
+if "GOOGLE_API_KEY" not in os.environ:
+        os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"]
+from langchain_google_genai import ChatGoogleGenerativeAI
+model = ChatGoogleGenerativeAI(model="gemini-2.0-flash" ,temperature=0)
 
 # State class to store messages and summary
 class State(MessagesState):
