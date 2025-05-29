@@ -1,6 +1,6 @@
 langgraph
 langchain-core
 langchain-community
-langchain-openai
+langchain_google_genai
 tavily-python
 wikipedia
