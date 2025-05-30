@@ -2,7 +2,7 @@ import operator
 from typing import Annotated
 from typing_extensions import TypedDict
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
@@ -22,7 +22,8 @@ model = ChatGoogleGenerativeAI(model="gemini-2.0-flash" ,temperature=0)
 
 # Define the state
 class Subjects(BaseModel):
-    subjects: list[str]
+    # subjects: list[str]
+    subjects: list[str] = Field(..., min_items=3, max_items=3, description="Exactly 3 related sub-topics")
 
 class BestJoke(BaseModel):
     id: int
@@ -36,6 +37,7 @@ class OverallState(TypedDict):
 def generate_topics(state: OverallState):
     prompt = subjects_prompt.format(topic=state["topic"])
     response = model.with_structured_output(Subjects).invoke(prompt)
+    # response = model.with_structured_output(method="json_mode").invoke(prompt)
     return {"subjects": response.subjects}
 
 class JokeState(TypedDict):
